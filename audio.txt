@@ -1,3 +1,0 @@
- private static final AudioClip ALERT_AUDIOCLIP = new AudioClip(FXMLDocumentController.class.getResource("Alarm.Wav.mp3").toString());
-
-   FXMLDocumentController.ALERT_AUDIOCLIP.play();
