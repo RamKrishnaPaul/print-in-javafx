@@ -1,0 +1,92 @@
+// for bold 
+
+import javafx.application.Application;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.Scene;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.util.Callback;
+
+public class TableColors extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        TableView<String> tv = new TableView<>();
+        TableColumn<String, String> tcName = new TableColumn("name");
+        ObservableList<String> items = FXCollections.observableArrayList("OK","KO","N/A","Normal");
+        tv.setItems(items);
+        tv.getColumns().add(tcName);
+        tcName.setCellValueFactory((p) -> new SimpleStringProperty(p.getValue()));
+        tcName.setCellFactory(new Callback<TableColumn<String, String>, TableCell<String, String>>() {
+            @Override
+            public TableCell call(TableColumn p) {
+                return new TableCell<String, String>() {
+                    @Override
+                    public void updateItem(final String item, final boolean empty) {
+                        super.updateItem(item, empty);//*don't forget!
+                        if (item != null) {
+                            setText(item);
+                            setAlignment(Pos.CENTER);
+                            if (item.equals("OK")) {
+                                setStyle("-fx-text-fill: green; -fx-font-weight:bold;");
+                            }
+                            else if (item.equals("N/A")) {
+                                setStyle("-fx-text-fill: black; -fx-font-weight:bold;");
+                            }
+                            else if (item.equals("KO")) {
+                                setStyle("-fx-text-fill: red; -fx-font-weight:bold;");
+                            } 
+                            else setStyle("");
+                        } else {
+                            setText(null);
+                        }
+                    }
+                };
+            }
+        });
+
+        tv.setOnMouseClicked((MouseEvent event) -> {
+            if (event.getButton()==MouseButton.PRIMARY) items.add("OK");
+            else items.add("KO");
+        });
+
+        Scene scene = new Scene(tv, 300, 250);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+}
+
+
+
+------------------------------------------------------------------------------------------------------
+
+tv.setRowFactory(new Callback<TableView<TypeReport>, TableRow<TypeReport>>() {
+        @Override
+        public TableRow<TypeReport> call(TableView<TypeReport> param) {
+            return new TableRow<TypeReport>() {
+               @Override
+protected void updateItem(TypeReport item, boolean empty) {
+    super.updateItem(item, empty);
+    if (item==null) {
+        setStyle("");
+    } else  {
+        String res=item.getName();
+        if (res.startsWith(" ")) {
+            setStyle("");
+        } else
+            setStyle("-fx-font-weight: bold");
+    }
+
+}
+            };
+        }
+    });
+
+
+--------------------------------------------------------------------------------------------------------------
