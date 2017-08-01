@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import jfxtras.scene.control.LocalDatePicker?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <JFXTabPane BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab text="Untitled Tab">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <top>
+                        <Pane prefHeight="94.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+                     </top>
+                     <center>
+                        <JFXTabPane BorderPane.alignment="CENTER">
+                           <tabs>
+                              <Tab text="Untitled Tab">
+                                 <content>
+                                    <GridPane>
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                            <columns>
+                                              <TableColumn prefWidth="238.0" text="C1" />
+                                              <TableColumn prefWidth="261.0" text="C2" />
+                                            </columns>
+                                          </TableView>
+                                          <Pagination prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Untitled Tab">
+                                 <content>
+                                    <GridPane>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                             <columns>
+                                                <TableColumn prefWidth="238.0" text="C1" />
+                                                <TableColumn prefWidth="261.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Pagination prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Untitled Tab">
+                                 <content>
+                                    <GridPane>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                             <columns>
+                                                <TableColumn prefWidth="238.0" text="C1" />
+                                                <TableColumn prefWidth="261.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Pagination prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </Tab>
+                              <Tab text="Untitled Tab">
+                                 <content>
+                                    <GridPane>
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <TableView prefHeight="200.0" prefWidth="200.0">
+                                             <columns>
+                                                <TableColumn prefWidth="238.0" text="C1" />
+                                                <TableColumn prefWidth="261.0" text="C2" />
+                                             </columns>
+                                          </TableView>
+                                          <Pagination prefHeight="200.0" prefWidth="200.0" />
+                                       </children>
+                                    </GridPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </JFXTabPane>
+                     </center>
+                     <right>
+                        <Pane prefHeight="148.0" prefWidth="25.0" BorderPane.alignment="CENTER" />
+                     </right>
+                     <left>
+                        <Pane prefHeight="148.0" prefWidth="15.0" BorderPane.alignment="CENTER" />
+                     </left>
+                     <bottom>
+                        <Pane prefHeight="11.0" prefWidth="364.0" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </center>
+   <left>
+      <VBox prefHeight="330.0" prefWidth="236.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="26.0" prefWidth="100.0" />
+            <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: orange;" textAlignment="JUSTIFY" />
+            <Region layoutX="10.0" layoutY="10.0" prefHeight="13.0" prefWidth="100.0" />
+            <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="36.0" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: orange;" />
+            <Region layoutX="10.0" layoutY="61.0" prefHeight="13.0" prefWidth="100.0" />
+            <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="74.0" prefHeight="25.0" prefWidth="180.0" style="-fx-background-color: orange;" />
+            <Region layoutX="10.0" layoutY="99.0" prefHeight="13.0" prefWidth="100.0" />
+            <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="112.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: orange;" />
+            <Region layoutX="10.0" layoutY="137.0" prefHeight="13.0" prefWidth="100.0" />
+            <JFXButton buttonType="RAISED" layoutX="10.0" layoutY="150.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: orange;" />
+            <Region layoutX="10.0" layoutY="175.0" prefHeight="13.0" prefWidth="100.0" />
+            <LocalDatePicker />
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <Pane prefHeight="65.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+   </top>
+   <bottom>
+      <HBox prefHeight="58.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Region prefHeight="58.0" prefWidth="104.0" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Button" />
+            <Region layoutX="10.0" layoutY="10.0" prefHeight="58.0" prefWidth="26.0" />
+            <Button layoutX="114.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="114.0" text="Button" />
+            <Region layoutX="228.0" layoutY="10.0" prefHeight="58.0" prefWidth="130.0" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
