@@ -1,0 +1,30 @@
+package test1;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ *
+ * @author Ram Krishna Paul
+ */
+public class Reverse {
+
+    public static void main(String[] args) {
+        List<String> nums = new ArrayList<String>();
+        nums.add("ram");
+        nums.add("syam");
+        nums.add("bill");
+        nums.add("john");
+        nums.add("hola");
+
+//        Collections.sort(nums);
+
+        Collections.reverse(nums);
+
+        System.out.println(nums);
+        
+        nums.forEach(ram ->System.out.println(ram));
+    }
+
+}
