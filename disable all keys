@@ -1,0 +1,18 @@
+
+            htmleditor2.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(javafx.scene.input.KeyEvent event) {
+//                    if (event.getCode() == KeyCode.DIGIT1||event.getCode() == KeyCode.DIGIT2) {
+
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.initStyle(StageStyle.UTILITY);
+                        alert.setTitle("Error");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Sorry you can't edit..");
+                        alert.showAndWait();
+                        event.consume(); // do nothing
+                        return;
+//                    }
+
+                }
+            });
