@@ -1,0 +1,191 @@
+package htmleditor;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Base64;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+/**
+ *
+ * @author krish
+ */
+public class FXMLDocumentController implements Initializable {
+
+    @FXML
+    private Button button;
+    @FXML
+    private HTMLEditor htmlEditor;
+    @FXML
+    private HTMLEditor htmleditor2;
+
+    private String stripHTMLTags(String htmlText) {
+
+        Pattern pattern = Pattern.compile("<[^>]*>");
+        Matcher matcher = pattern.matcher(htmlText);
+        final StringBuffer sb = new StringBuffer(htmlText.length());
+        while (matcher.find()) {
+            matcher.appendReplacement(sb, " ");
+        }
+        matcher.appendTail(sb);
+        return sb.toString().trim();
+    }
+    String strTable = "";
+
+    public void inputImgandTable() {
+        Node node = htmlEditor.lookup(".top-toolbar");
+        if (node instanceof ToolBar) {
+            ToolBar bar = (ToolBar) node;
+            Button smurfButton = new Button("Insert Table");
+            Label row = new Label();
+            row.setText("Row:");
+            TextField rowField = new TextField("0");
+            rowField.setPrefWidth(30);
+            Label column = new Label();
+            column.setText("Column:");
+            TextField columnField = new TextField("0");
+            columnField.setPrefWidth(30);
+            Button insertImage = new Button("Insert Image");
+            bar.getItems().addAll(smurfButton, row, rowField, column, columnField, insertImage);
+            smurfButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent arg0) {
+                    StringBuilder tableContent = new StringBuilder();
+                    tableContent.append("<table style='border-collapse:collapse; border: 1px solid black;'>");
+                    for (int i = 0; i < Integer.parseInt(rowField.getText()); i++) {
+                        tableContent.append("<tr >");
+                        for (int j = 0; j < Integer.parseInt(columnField.getText()); j++) {
+                            tableContent.append("<td width='100px' height='30px' style='border-collapse:collapse; border: 1px solid black;'>").append("</td>");
+                        }
+                        tableContent.append("</tr >");
+                    }
+                    tableContent.append("</table ><br>");
+                    strTable = tableContent.toString();
+                    htmlEditor.setHtmlText(htmlEditor.getHtmlText() + strTable);
+                }
+            });
+
+            insertImage.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent arg0) {
+                    FileChooser fileChooser = new FileChooser();
+                    fileChooser.setTitle("Select Image");
+                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("All images", new String[]{"*.JPEG", "*.PNG", "*.png", "*.jpg", "*.JPG", "*.gif"});
+                    fileChooser.getExtensionFilters().add(extFilter);
+                    File file = fileChooser.showOpenDialog(new Stage());
+                    try {
+                        byte[] bytes = loadFile(file);
+                        byte[] encoded = Base64.getEncoder().encode(bytes);
+                        String encodedString = new String(encoded);
+                        System.out.println("encodedString" + encodedString);
+                        htmlEditor.setHtmlText(
+                                htmlEditor.getHtmlText()
+                                + "<img src='data:image/png;base64," + encodedString + "'>");
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        }
+    }
+
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+
+        String st = htmlEditor.getHtmlText();
+
+        System.out.println("st :" + st);
+        WebView browser = new WebView();
+        WebEngine webEngine = browser.getEngine();
+        if (st.contains("contenteditable=\"true\"")) {
+            st = st.replace("contenteditable=\"true\"", "contenteditable=\"false\"");
+        }
+        System.out.println("st changed :" + st);
+        webEngine.loadContent(st);
+        String str = "";
+        str = stripHTMLTags(st);
+
+        if (!st.equalsIgnoreCase("")) {
+            htmleditor2.setHtmlText(st);
+
+        } else {
+            System.out.println("strTable " + strTable);
+            htmleditor2.setHtmlText(strTable);
+        }
+
+    }
+
+    private static byte[] loadFile(File file) throws IOException {
+        InputStream is = new FileInputStream(file);
+
+        long length = file.length();
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+        byte[] bytes = new byte[(int) length];
+
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length
+                && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+            offset += numRead;
+        }
+
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file " + file.getName());
+        }
+
+        is.close();
+        return bytes;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        htmleditor2.setDisable(true);
+        inputImgandTable();
+        htmleditor2.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("You scroll me!");
+                htmleditor2.setDisable(false);
+            }
+        });
+
+    }
+
+    @FXML
+    private void onScroll(ScrollEvent event) {
+        System.out.println("i m herr");
+        htmleditor2.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("You scroll me!");
+                htmleditor2.setDisable(false);
+            }
+        });
+    }
+
+}
