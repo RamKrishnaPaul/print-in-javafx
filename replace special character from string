@@ -1,0 +1,33 @@
+package example;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapExample {
+
+    public static void main(String[] args) {
+        String str = "my name is &&&&. i am from &&&&, i came at &&&&";
+        Map<Integer, String> map = new HashMap<Integer, String>();
+        map.put(0, "ram");
+        map.put(1, "bangalore");
+        map.put(2, "9:00pm");
+//        int count = 0;
+//        while (str.contains("&&&&")) {
+//            System.out.println("map:"+map.get(count));
+//            str = str.replaceFirst("&&&&", map.get(count));
+//            count++;
+//        }
+//        System.out.println("str :" + str);
+        
+        
+            
+        for (Map.Entry ma : map.entrySet()) {
+            System.out.println(ma.getKey() + " " + ma.getValue());
+            if (str.contains("&&&&")) {
+                str = str.replaceFirst("&&&&", ma.getValue().toString());
+            }
+        }
+        System.out.println("str :" + str);
+       
+    }
+}
