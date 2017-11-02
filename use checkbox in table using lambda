@@ -17,3 +17,6 @@
             return property;
         });
     }
+
+
+https://stackoverflow.com/questions/37334094/create-a-framework-type-column-header-for-select-all-in-javafx-8
