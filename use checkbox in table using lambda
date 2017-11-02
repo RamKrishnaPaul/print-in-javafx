@@ -1,0 +1,19 @@
+ TableView<T> tableView;
+    TableColumn<T, Boolean> booleanColumn;
+
+    private void setupTableView() {
+        tableView.setEditable(true);
+    }
+
+    private void setupTableViewColumn() {
+        booleanColumn.setCellFactory(column -> new CheckBoxTableCell<>());
+        booleanColumn.setCellValueFactory(cellData -> {
+            T cellValue = cellData.getValue();
+            BooleanProperty property = cellValue.choosedProperty();
+
+            // Add listener to handler change
+            property.addListener((observable, oldValue, newValue) -> cellValue.setChoosed(newValue));
+
+            return property;
+        });
+    }
