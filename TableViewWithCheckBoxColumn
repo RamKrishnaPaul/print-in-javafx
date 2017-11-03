@@ -1,0 +1,104 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package clickperformbylambda;
+
+/**
+ *
+ * @author krish
+ */
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Function;
+
+import javafx.application.Application;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener.Change;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class TableViewWithCheckBoxColumn extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        TableView<Person> table = new TableView<>();
+        table.setEditable(true);
+
+        TableColumn<Person, Void> checkColumn = new TableColumn<>();
+        table.getColumns().add(checkColumn);
+
+        Map<Person, BooleanProperty> checkedRows = new HashMap<>();
+
+        // clear obsolete table items from map:
+        table.getItems().addListener((Change<? extends Person> c) -> {
+            if (c.wasRemoved()) {
+                c.getRemoved().forEach(checkedRows::remove);
+            }
+        });
+
+        checkColumn.setCellFactory(CheckBoxTableCell.forTableColumn(i -> 
+            checkedRows.computeIfAbsent(table.getItems().get(i), p -> new SimpleBooleanProperty())));
+
+        CheckBox checkAll = new CheckBox();
+        checkAll.setOnAction(e -> {
+            if (checkAll.isSelected()) {
+                table.getItems().forEach(p -> 
+                    checkedRows.computeIfAbsent(p, person -> new SimpleBooleanProperty()).set(true));
+            } else{
+                checkedRows.values().stream().forEach(checked -> checked.set(false));
+            }
+        });
+
+        checkColumn.setGraphic(checkAll);
+        checkColumn.setEditable(true);
+
+        table.getColumns().add(column("First Name", Person::firstNameProperty));
+        table.getColumns().add(column("Last Name", Person::lastNameProperty));
+        table.getColumns().add(column("Email", Person::emailProperty));
+
+        table.getItems().addAll(
+                new Person("Jacob", "Smith", "jacob.smith@example.com"),
+                new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
+                new Person("Ethan", "Williams", "ethan.williams@example.com"),
+                new Person("Emma", "Jones", "emma.jones@example.com"),
+                new Person("Michael", "Brown", "michael.brown@example.com") 
+        );
+
+        Button verify = new Button("Verify");
+        verify.setOnAction(evt -> {
+            checkedRows.entrySet().stream().filter(e -> e.getValue().get()).map(Entry::getKey)
+            .map(Person::getFirstName).forEach(System.out::println);
+        });
+
+        BorderPane root = new BorderPane(table);
+        BorderPane.setAlignment(verify, Pos.CENTER);
+        BorderPane.setMargin(verify, new Insets(5));
+        root.setBottom(verify);
+
+        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.show();
+    }
+
+    private static <S,T> TableColumn<S,T> column(String title, Function<S, ObservableValue<T>> property) {
+        TableColumn<S,T> col = new TableColumn<>(title);
+        col.setCellValueFactory(cellData -> property.apply(cellData.getValue()));
+        return col ;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
