@@ -1,0 +1,84 @@
+package javafxapplication3;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.controlsfx.control.CheckListView;
+
+/**
+ *
+ * @author krish
+ */
+public class FXMLDocumentController implements Initializable {
+
+    private Label label;
+    @FXML
+    private CheckListView<String> checkListview;
+    private ObservableList<String> data;
+    @FXML
+    private Button btn;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        checkListview.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        List<String> li1 = new ArrayList<String>();
+        li1.add("ram");
+        li1.add("john");
+        li1.add("ron");
+
+        List<String> li = new ArrayList<String>();
+        li.add("ram");
+        li.add("john");
+        li.add("bill");
+        li.add("dam");
+        li.add("ron");
+        data = FXCollections.observableArrayList();
+        data.addAll(li);
+        checkListview.setItems(data);
+
+        for (int i = 0; i < li.size(); i++) {
+            for (int j = 0; j < li1.size(); j++) {
+                if (li.get(i).contains(li1.get(j))) {
+//            checkListview.getSelectionModel().select((j));
+                    checkListview.getCheckModel().check(li1.get(j));
+                }
+            }
+        }
+
+    }
+
+    @FXML
+    private void onbtnClick(ActionEvent event) throws IOException {
+        Stage stageTwo = new Stage();
+        Parent rootSecond;
+        FXMLLoader fXMLLoader = new FXMLLoader(getClass().getResource("Secondary.fxml"));
+        rootSecond = (Parent) fXMLLoader.load();
+        SecondaryController second = fXMLLoader.getController();
+        stageTwo.setScene(new Scene(rootSecond));
+        stageTwo.setTitle("Second");
+//        stageTwo.setAlwaysOnTop(true);
+//        stageTwo.initStyle(StageStyle.UNDECORATED);
+//        stageTwo.initModality(Modality.APPLICATION_MODAL);
+        stageTwo.initOwner(btn.getScene().getWindow());
+        stageTwo.toFront();
+        stageTwo.showAndWait();
+        stageTwo.setResizable(false);
+    }
+
+}
